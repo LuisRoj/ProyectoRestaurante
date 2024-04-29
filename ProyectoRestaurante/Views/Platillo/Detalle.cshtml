@@ -1,0 +1,32 @@
+﻿@model ProyectoRestaurante.Models.Platillo
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h1>Detalle del Menú</h1>
+<br />
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div style="width: 100%; height: 600px; background-size: cover; background-image: url('@Model.imagen');"></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(model => model.nombre)</h5>
+            <p class="card-text">Precio: @Html.DisplayFor(model => model.precio)</p>
+            <p class="card-text">
+                Stock:
+                <input type="number" id="stock" name="stock" min="1" max="@Model.stock" value="1">
+            </p>
+            <p class="card-text">Descripcion: @Html.DisplayFor(model => model.descripcion)</p>
+            <a href="@Url.Action("carrito", new { id = Model.id })" class="btn btn-success">Agregar al carrito</a>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div>
+        <a asp-action="Index" class="btn btn-danger">Retornar</a>
+    </div>
