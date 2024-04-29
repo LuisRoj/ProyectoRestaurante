@@ -1,0 +1,35 @@
+﻿@model ProyectoRestaurante.Models.Platillo
+@{
+    ViewBag.Title = "Select";
+}
+
+<h2>Platillo Seleccionado</h2>
+
+@Html.Partial("_PartialRegistro")
+
+
+<div class="div-agregar-form">
+    @using (Html.BeginForm())
+    {
+        @Html.Hidden("codigo", Model.id)
+        <div>
+            <em>Ingrese la Cantidad</em>
+            @Html.TextBox("cantidad", 1, new { type = "number", min = 1, max = Model.stock })
+        </div>
+        <div>
+            <input type="submit" value="Agregar" class="btn btn-danger" /> |
+
+
+            <a href="@Url.Action("Index", "Platillo", new { page = ViewBag.PageNumber })" class="btn btn-primary">Retornar</a>
+
+
+
+
+
+        </div>
+    }
+    <div>
+        @ViewBag.mensaje
+    </div>
+
+</div>

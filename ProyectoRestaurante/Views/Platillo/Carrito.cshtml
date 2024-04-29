@@ -1,0 +1,53 @@
+﻿@model List<ProyectoRestaurante.Models.Registro>
+@{
+    ViewBag.Title = "Carrito";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/carrito.css" />
+</head>
+
+<h2>Carrito de Compras</h2>
+
+<div>
+
+    <div class="button-group">
+        <a href="@Url.Action("Index", "Platillo")" class="btn btn-primary">Seguir Comprando</a>
+
+    </div>
+
+    @Html.Partial("_PartialCarrito", Model)
+
+    <div class="button-group">
+        <a href="@Url.Action("Pedido", "Platillo")" class="btn btn-primary">Registrar Pedido</a>
+    </div>
+
+
+
+    <div>
+        @ViewBag.elimi
+        @ViewBag.notelimi
+
+    </div>
+
+</div>
+<script>
+    function aplicarAnimacionVibracion() {
+        var botonCarrito = document.querySelector('.carrito-btn');
+
+        if (hayRegistrosEnCarrito()) {
+            botonCarrito.classList.add('vibrar');
+        } else {
+            botonCarrito.classList.remove('vibrar');
+        }
+    }
+
+    function hayRegistrosEnCarrito() {
+        var registros = @Html.Raw(Json.Serialize(Model));
+        return registros.length > 0;
+    }
+
+    window.addEventListener("load", function () {
+        aplicarAnimacionVibracion();
+    });
+</script>
