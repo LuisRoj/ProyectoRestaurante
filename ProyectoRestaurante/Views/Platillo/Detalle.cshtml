@@ -11,17 +11,17 @@
         <div class="card">
             <div style="width: 100%; height: 600px; background-size: cover; background-image: url('@Model.imagen');"></div>
         </div>
+        <p class="card-text">
+            Ingrese la cantidad:
+            <input type="number" id="stock" name="stock" min="1" max="@Model.stock" value="1">
+        </p>
     </div>
     <div class="col-md-6">
         <div class="card-body">
             <h5 class="card-title">@Html.DisplayFor(model => model.nombre)</h5>
             <p class="card-text">Precio: @Html.DisplayFor(model => model.precio)</p>
-            <p class="card-text">
-                Stock:
-                <input type="number" id="stock" name="stock" min="1" max="@Model.stock" value="1">
-            </p>
-            <p class="card-text">Descripcion: @Html.DisplayFor(model => model.descripcion)</p>
-            <a href="@Url.Action("carrito", new { id = Model.id })" class="btn btn-success">Agregar al carrito</a>
+            <p class="card-text">Stock Disponible: @Html.DisplayFor(model => model.stock)</p>
+            <p class="card-text">Descripcion: @Html.DisplayFor(model => model.descripcion)</p>          
         </div>
     </div>
 </div>
@@ -29,4 +29,5 @@
 <div>
     <div>
         <a asp-action="Index" class="btn btn-danger">Retornar</a>
+        <a href="@Url.Action("Carrito", new { id = Model.id })" class="btn btn-success">Agregar al carrito</a>
     </div>

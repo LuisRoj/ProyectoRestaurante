@@ -45,7 +45,7 @@ namespace RegistroUsuarioRestaurante
             {
                 InsertarUsuarioEnBaseDeDatos(usuario);
                 TempData["Mensaje"] = "Usuario registrado correctamente.";
-                return RedirectToAction("Index", "Producto"); // Redirige al usuario a la página de prodcutos
+                return RedirectToAction("Index", "Platillo"); // Redirige al usuario a la página de prodcutos
             }
             else
             {
