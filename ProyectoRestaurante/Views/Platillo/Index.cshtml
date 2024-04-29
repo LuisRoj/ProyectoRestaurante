@@ -4,7 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Portal de Ventas: Tienda</h1>
+<div class="banner" style="background-image: url('/imagenes/banner.png');width: 100%; height: 600px; background-size: cover;">
+</div>
 
 <p>
     <a asp-action="Carrito" class="btn btn-primary">Ver Carrito</a>
@@ -50,7 +51,12 @@
                 </td>
                 <td>
                     @Html.ActionLink("Agregar al carrito", "carrito", new { id = item.id }, new { @class = "btn btn-success" })
+
+                    @Html.ActionLink("Select", "Select", new { id = item.id },
+                             new { @class = $"btn {(item.stock == 0 ? "deshabilita" : "btn-primary btn-select")}" })
                 </td>
+               
+
         </tr>
 }
     </tbody>

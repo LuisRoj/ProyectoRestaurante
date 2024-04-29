@@ -1,0 +1,72 @@
+﻿@model List<ProyectoRestaurante.Models.Registro>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/partialcarrito.css" />
+</head>
+<body>
+    <div class="carrito-container">
+
+        <table class="carrito-table">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                    <th>Imagen</th>
+                    @if (!ViewContext.RouteData.Values["action"].ToString().Equals("Pedido", StringComparison.OrdinalIgnoreCase))
+                    {
+                        <th>Acciones</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.id</td>
+                        <td>@item.nombre</td>
+                        <td>@item.cantidad</td>
+                        <td>@item.precio</td>
+                        <td>@(item.cantidad * item.precio)</td>
+                        <td class="carrito-image"><img src="@item.Imagen" alt="Imagen del platillo" /></td>
+
+                        <td>
+                            @if (!ViewContext.RouteData.Values["action"].ToString().Equals("Pedido", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete('@item.nombre', @item.id, '@Url.Action("Eliminar", "Platillo", new { id = @item.id })', '@item.Imagen')">
+                                    Eliminar
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            <strong id="totalAmount">Monto Total: @Model.Sum(item => item.cantidad * item.precio)</strong>
+        </div>
+
+    </div>
+
+    <div id="confirmModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h4>Confirmar Eliminación</h4>
+            <p id="productDescription"></p>
+            <img id="productImage" src="" alt="Product Image" />
+            <button id="deleteButton" class="btn btn-danger">Eliminar</button>
+            <button id="cancelButton" class="btn btn-primary" onclick="closeModal()">Cancelar</button>
+        </div>
+    </div>
+
+
+
+    <script src="~/js/partialcarrito.js"></script>
+</body>
+</html>
+
+
