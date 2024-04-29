@@ -51,7 +51,12 @@
                 </td>
                 <td>
                     @Html.ActionLink("Agregar al carrito", "carrito", new { id = item.id }, new { @class = "btn btn-success" })
+
+                    @Html.ActionLink("Select", "Select", new { id = item.id },
+                             new { @class = $"btn {(item.stock == 0 ? "deshabilita" : "btn-primary btn-select")}" })
                 </td>
+               
+
         </tr>
 }
     </tbody>
