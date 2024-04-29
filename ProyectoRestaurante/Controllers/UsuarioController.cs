@@ -20,7 +20,8 @@ namespace RegistroUsuarioRestaurante
             using (SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("usp_ListarUsuario", cn);
+                SqlCommand cmd = new SqlCommand("usp_InsertarUsuario", cn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@Id", usuario.Id);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.Nombre);
