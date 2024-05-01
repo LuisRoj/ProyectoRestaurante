@@ -7,7 +7,7 @@
 <h1>Productos</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Nuevo Producto</a>
 </p>
 <table class="table">
     <thead>
@@ -49,9 +49,8 @@
                 @Html.DisplayFor(modelItem => item.Stock)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
 }
@@ -61,7 +60,7 @@
 <div>
     @for (int i = 0; i < (int)ViewBag.pags; i++)
     {
-        <a asp-action="Paginacion" asp-route-p=@i
+        <a asp-action="Productos" asp-route-p=@i
            class=@(i==(int)ViewBag.p ? "btn btn-success" : "btn btn-primary")>@(i + 1)</a>
     }
 </div>
