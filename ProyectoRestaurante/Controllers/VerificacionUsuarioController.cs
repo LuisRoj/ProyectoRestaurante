@@ -14,31 +14,6 @@ namespace ProyectoRestaurante.Controllers
             _config = config;
         }
 
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult VerificarCredenciales(Usuario usuario)
-        {
-            if (ModelState.IsValid)
-            {
-                if (VerificarCredenciales(usuario.Correo, usuario.Contraseña))
-                {
-                    TempData["Mensaje"] = "Inicio de sesión exitoso.";
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    TempData["Mensaje"] = "Correo electrónico o contraseña incorrectos.";
-                }
-            }
-
-            return View("Login", usuario);
-        }
-
         private bool VerificarCredenciales(string correo, string contraseña)
         {
             bool credencialesValidas = false;
@@ -60,6 +35,31 @@ namespace ProyectoRestaurante.Controllers
                 }
             }
             return credencialesValidas;
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult VerificarCredenciales(Usuario usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                if (VerificarCredenciales(usuario.Correo, usuario.Contraseña))
+                {
+                    TempData["Mensaje"] = "Inicio de sesión exitoso.";
+                    return RedirectToAction("Index", "Platillo");
+                }
+                else
+                {
+                    TempData["Mensaje"] = "Correo electrónico o contraseña incorrectos.";
+                }
+            }
+
+            return View("Login", usuario);
         }
     }
 }

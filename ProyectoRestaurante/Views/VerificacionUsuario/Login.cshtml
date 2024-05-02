@@ -1,13 +1,12 @@
-﻿@model ProyectoRestaurante.Models.Usuario
+﻿@model ProyectoRestaurante.Models.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
 
-
 <h2>Iniciar Sesión</h2>
 
 <!-- Formulario de inicio de sesión -->
-<form asp-controller="VerificacionUsuario" asp-action="VerificarCredenciales" method="post">
+<form asp-controller="VerificacionUsuario" asp-action="Login" method="post">
     <div class="form-group">
         <label asp-for="Correo">Correo electrónico:</label>
         <input asp-for="Correo" class="form-control" />
