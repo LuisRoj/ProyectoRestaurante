@@ -45,8 +45,6 @@ namespace RegistroUsuarioRestaurante
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("usp_InsertarUsuario", cn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@Id", usuario.Id);
                 cmd.Parameters.AddWithValue("@Nombre", usuario.Nombre);
                 cmd.Parameters.AddWithValue("@Apellido", usuario.Apellido);
                 cmd.Parameters.AddWithValue("@Correo", usuario.Correo);
@@ -71,7 +69,7 @@ namespace RegistroUsuarioRestaurante
             {
                 InsertarUsuarioEnBaseDeDatos(usuario);
                 TempData["Mensaje"] = "Usuario registrado correctamente.";
-                return RedirectToAction("Index", "Producto"); // Redirige al usuario a la página de prodcutos
+                return RedirectToAction("Index", "Platillo"); // Redirige al usuario a la página de prodcutos
             }
             else
             {
