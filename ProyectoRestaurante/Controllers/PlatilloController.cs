@@ -59,7 +59,7 @@ namespace ProyectoRestaurante.Controllers
                         descripcion = dr.GetString(2),
                         precio = dr.GetDecimal(3),
                         stock = dr.GetInt32(4),
-                        imagen = dr.GetString(5) // Asegúrate de que la ruta de la imagen se almacena en la base de datos
+                        imagen = dr.GetString(5) // Asegúrate que la ruta de la imagen se almacena en la base de datos
                     });
                 }
                 dr.Close();

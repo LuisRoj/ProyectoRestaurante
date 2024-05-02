@@ -39,6 +39,16 @@
         <input asp-for="Direccion" class="form-control" />
         <span asp-validation-for="Direccion" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="Contraseña">Contraseña:</label>
+        <input asp-for="Contraseña" type="password" class="form-control" />
+        <span asp-validation-for="Contraseña" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmarContraseña">Confirmar Contraseña:</label>
+        <input asp-for="ConfirmarContraseña" type="password" class="form-control" />
+        <span asp-validation-for="ConfirmarContraseña" class="text-danger"></span>
+    </div>
     <button type="submit" class="btn btn-primary">Registrar</button>
 </form>
 
