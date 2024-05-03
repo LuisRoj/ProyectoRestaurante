@@ -20,26 +20,34 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark @if(ViewContext.RouteData.Values["Controller"].ToString() == "Home" && ViewContext.RouteData.Values["Action"].ToString() == "Index") {
-                            <text>active</text>
-                            }" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Platillo" asp-action="Index">Home</a>
                         <li class="nav-item">
                             <a class="nav-link platillo-btn @if(ViewContext.RouteData.Values["Controller"].ToString() == "Platillo" && ViewContext.RouteData.Values["Action"].ToString() == "Index") {
                             <text>active</text>
                             }" href="/Platillo/Index">Platillos</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Platillo" asp-action="Index">Home</a>
+                           
                         </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="">Productos</a>
+
+                        <li class="nav-item">
+                            <a class="nav-link platillo-btn @if(ViewContext.RouteData.Values["Controller"].ToString() == "Producto" && ViewContext.RouteData.Values["Action"].ToString() == "Productos") {
+                            <text>active</text>
+                            }" href="/Producto/Productos">Productos</a>
+
                         </li>
+                      
                         <li class="nav-item">
                             <a class="nav-link carrito-btn @if(ViewContext.RouteData.Values["Controller"].ToString() == "Platillo" && ViewContext.RouteData.Values["Action"].ToString() == "Carrito") {
                             <text>active</text>
                                 }" href="/Platillo/Carrito">
                                 <img src="/icono/carrito.png" alt="Carrito" width="30" height="28"> 
                             </a>
+                        </li>
+                        <li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Registrar">Registro</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="VerificacionUsuario" asp-action="Login">Iniciar Sesión</a>
                         </li>
                     </ul>
                 </div>

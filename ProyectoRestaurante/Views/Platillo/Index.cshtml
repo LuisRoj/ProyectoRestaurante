@@ -61,3 +61,25 @@
 }
     </tbody>
 </table>
+<br />
+<h1 style="text-align:center">¡Conoce nuestro sabor único!</h1>
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <a href="@Url.Action("Select", new { id = item.id })">
+                    <div style="width: 100%; height: 300px; background-size: cover; background-image: url('@item.imagen');"></div>
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.nombre)</h5>
+                    <p class="card-text">Precio: @Html.DisplayFor(modelItem => item.precio)</p>
+                    <p class="card-text">Stock: @Html.DisplayFor(modelItem => item.stock)</p>
+                    <a href="@Url.Action("Select", new { id = item.id })" class="btn btn-success">Seleccionar</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

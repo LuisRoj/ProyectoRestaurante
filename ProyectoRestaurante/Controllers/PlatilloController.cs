@@ -59,7 +59,7 @@ namespace ProyectoRestaurante.Controllers
                         descripcion = dr.GetString(2),
                         precio = dr.GetDecimal(3),
                         stock = dr.GetInt32(4),
-                        imagen = dr.GetString(5) // Asegúrate de que la ruta de la imagen se almacena en la base de datos
+                        imagen = dr.GetString(5) // Asegúrate que la ruta de la imagen se almacena en la base de datos
                     });
                 }
                 dr.Close();
@@ -248,7 +248,54 @@ namespace ProyectoRestaurante.Controllers
         }
 
 
+        public async Task<IActionResult> Detalle(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            Platillo platillo = await ObtenerPlatillo(id.Value);
+
+            if (platillo == null)
+            {
+                return NotFound();
+            }
+
+            return View(platillo);
+        }
+
+        private async Task<Platillo> ObtenerPlatillo(int id)
+        {
+            Platillo platillo = null;
+
+            using (SqlConnection cnn = new SqlConnection(_config["ConnectionStrings:sql"]))
+            {
+                await cnn.OpenAsync();
+                using (SqlCommand cmd = new SqlCommand("usp_Platillo_ObtenerPorId", cnn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader dr = await cmd.ExecuteReaderAsync();
+
+                    if (await dr.ReadAsync())
+                    {
+                        platillo = new Platillo
+                        {
+                            id = dr.GetInt32(0),
+                            nombre = dr.GetString(1),
+                            descripcion = dr.GetString(2),
+                            precio = dr.GetDecimal(3),
+                            stock = dr.GetInt32(4),
+                            imagen = dr.GetString(5)
+                        };
+                    }
+                }
+            }
+
+            return platillo;
+        }
 
 
 
