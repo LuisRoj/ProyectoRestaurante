@@ -58,7 +58,6 @@ namespace ProyectoRestaurante.Controllers
                     TempData["Mensaje"] = "Correo electrónico o contraseña incorrectos.";
                 }
             }
-
             return View("Login", usuario);
         }
     }

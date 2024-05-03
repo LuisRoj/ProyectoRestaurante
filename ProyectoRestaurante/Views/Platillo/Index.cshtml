@@ -10,58 +10,6 @@
 <p>
     <a asp-action="Carrito" class="btn btn-primary">Ver Carrito</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>       
-            <th>
-                @Html.DisplayNameFor(model => model.nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.precio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.stock)
-            </th>
-            <th>
-                Imagen
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.precio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.stock)
-            </td>
-                <td>
-                    <img src="@item.imagen" alt="Imagen del platillo" style="width: 100px; height: 100px;"/>
-                </td>
-                <td>
-                    @Html.ActionLink("Agregar al carrito", "carrito", new { id = item.id }, new { @class = "btn btn-success" })
-
-                    @Html.ActionLink("Select", "Select", new { id = item.id },
-                             new { @class = $"btn {(item.stock == 0 ? "deshabilita" : "btn-primary btn-select")}" })
-                </td>
-               
-
-        </tr>
-}
-    </tbody>
-</table>
-<br />
 <h1 style="text-align:center">¡Conoce nuestro sabor único!</h1>
 
 
