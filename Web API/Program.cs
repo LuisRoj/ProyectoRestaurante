@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DevExpress.Data.Browsing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Web_API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Web_APIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Web_APIContext") ?? throw new InvalidOperationException("Connection string 'Web_APIContext' not found.")));
@@ -9,6 +11,14 @@ builder.Services.AddDbContext<Web_APIContext>(options =>
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
