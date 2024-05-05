@@ -41,6 +41,9 @@ namespace ProyectoRestaurante.Controllers
             return View(await Task.Run(() => ListarPlatillos()));
         }
 
+        
+
+ 
         public List<Platillo> ListarPlatillos()
         {
             List<Platillo> lista = new List<Platillo>();
@@ -52,20 +55,33 @@ namespace ProyectoRestaurante.Controllers
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
                 {
-                    lista.Add(new Platillo
+                    Platillo platillo = new Platillo
                     {
                         id = dr.GetInt32(0),
                         nombre = dr.GetString(1),
                         descripcion = dr.GetString(2),
                         precio = dr.GetDecimal(3),
-                        stock = dr.GetInt32(4),
-                        imagen = dr.GetString(5) // Asegúrate que la ruta de la imagen se almacena en la base de datos
-                    });
+                        stock = dr.GetInt32(4)
+                    };
+
+                    // Verificar si el valor de la columna de la imagen es nulo
+                    if (!dr.IsDBNull(5))
+                    {
+                        platillo.imagen = dr.GetString(5);
+                    }
+                    else
+                    {
+                        // Si es nulo, asignar un valor predeterminado o dejarlo como null, según sea necesario
+                        platillo.imagen = null; // O puedes asignar un valor predeterminado como una ruta de imagen genérica
+                    }
+
+                    lista.Add(platillo);
                 }
                 dr.Close();
             }
             return lista;
         }
+
 
         Platillo buscar(int id)
         {
@@ -75,6 +91,179 @@ namespace ProyectoRestaurante.Controllers
         {
             Platillo platillo = buscar(id);
             return View(platillo);
+        }
+
+        public void agregarPlatillo(Platillo nuevoPlatillo)
+        {
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("usp_AgregarPlatillo", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@nombre", nuevoPlatillo.nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", nuevoPlatillo.descripcion);
+                    cmd.Parameters.AddWithValue("@precio", nuevoPlatillo.precio);
+                    cmd.Parameters.AddWithValue("@stock", nuevoPlatillo.stock);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al agregar el platillo: " + ex.Message);
+            }
+        }
+
+        public void editarPlatillo(Platillo platillo)
+        {
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("usp_EditarPlatillo", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", platillo.id);
+                    cmd.Parameters.AddWithValue("@nombre", platillo.nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", platillo.descripcion);
+                    cmd.Parameters.AddWithValue("@precio", platillo.precio);
+                    cmd.Parameters.AddWithValue("@stock", platillo.stock);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al editar el producto: " + ex.Message);
+            }
+        }
+
+        public List<Platillo> seleccionarPlatillos(int? idPlatillo = null)
+        {
+            List<Platillo> temporal = new List<Platillo>();
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("usp_SeleccionarPlatilloPorId", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", idPlatillo);
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    // Verificar si hay filas antes de intentar leer datos
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            temporal.Add(new Platillo()
+                            {
+                                id = dr.GetInt32(0),
+                                nombre = dr.GetString(1),
+                                descripcion = dr.GetString(2),
+                                precio = dr.GetDecimal(3),
+                                stock = dr.GetInt32(4),
+                            });
+                        }
+                    }
+                    dr.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones: puedes registrar el error o lanzar una excepción personalizada
+                Console.WriteLine("Error al buscar el producto: " + ex.Message);
+            }
+            return temporal;
+        }
+
+        public void eliminarPlatillo(Platillo platillo)
+        {
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("usp_EliminarPlatillo", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", platillo.id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al eliminar el producto: " + ex.Message);
+            }
+        }
+
+        public async Task<IActionResult> Platillos(int p = 0)
+        {
+            IEnumerable<Platillo> temporal = ListarPlatillos();
+
+            int fila = 15;
+            int c = temporal.Count();
+            int pags = c % fila == 0 ? c / fila : c / fila + 1;
+
+            ViewBag.p = p;
+            ViewBag.pags = pags;
+
+            return View(await Task.Run(() => temporal.Skip(fila * p).Take(fila)));
+        }
+
+        public async Task<IActionResult> EditPlatillos(int? id = null)
+        {
+            if (id == null)
+                return RedirectToAction("Platillos");
+            Platillo platillo = seleccionarPlatillos(id).FirstOrDefault();
+            return View(await Task.Run(() => platillo));
+        }
+
+        public async Task<IActionResult> CreatePlatillo()
+        {
+            return View(await Task.Run(() => new Platillo()));
+        }
+
+        public async Task<IActionResult> DeletePlatillos(int id)
+        {
+            if (id == null)
+                return RedirectToAction("Platillos");
+            Platillo platillo = seleccionarPlatillos(id).FirstOrDefault();
+            return View(await Task.Run(() => platillo));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreatePlatillo(Platillo reg)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(await Task.Run(() => reg));
+            }
+
+            agregarPlatillo(reg);
+            return RedirectToAction(nameof(Platillos));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPlatillos(Platillo reg)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(await Task.Run(() => reg));
+            }
+
+            editarPlatillo(reg);
+            return RedirectToAction(nameof(Platillos));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePlatillos(Platillo platillo)
+        {
+            if (platillo.id == null)
+                return RedirectToAction("Platillos");
+            eliminarPlatillo(platillo);
+            return RedirectToAction("Platillos");
         }
 
         [HttpPost]

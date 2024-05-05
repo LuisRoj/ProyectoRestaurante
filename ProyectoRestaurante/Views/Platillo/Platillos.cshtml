@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ProyectoRestaurante.Models.Platillo>
+
+@{
+    ViewData["Title"] = "Platillos";
+}
+
+<h1>Platillos</h1>
+
+<p>
+    <a asp-action="CreatePlatillo" class="btn btn-primary">Nuevo Platillo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.stock)
+            </th>
+            <!--<th>
+                @Html.DisplayNameFor(model => model.imagen)
+            </th>-->
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stock)
+            </td>
+            <!--<td>
+                <div style="width: 100%;height: 64px; background-size: cover; background-image: url('@item.imagen');"></div>
+            </td>-->
+            <td>
+                @Html.ActionLink("Editar", "EditPlatillos", new { id = item.id }, new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Eliminar", "DeletePlatillos", new { id = item.id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<!--definiendo la numeracion de la paginacion-->
+<div>
+    @for (int i = 0; i < (int)ViewBag.pags; i++)
+    {
+        <a asp-action="ListarPlatillos" asp-route-p=@i
+           class=@(i==(int)ViewBag.p ? "btn btn-success" : "btn btn-primary")>@(i + 1)</a>
+    }
+</div>
