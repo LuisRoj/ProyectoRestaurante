@@ -1,0 +1,57 @@
+﻿@model ProyectoRestaurante.Models.Platillo
+
+@{
+    ViewData["Title"] = "DeletePlatillos";
+}
+
+<h1>DeletePlatillos</h1>
+
+<h3>¿Está seguro de que desea eliminar este platillo?</h3>
+<div>
+    <h4>Platillo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.precio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.precio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.stock)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.stock)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.imagen)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.imagen)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeletePlatillos">
+        @Html.HiddenFor(model => model.id)
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Platillos" class="btn btn-primary">Cancelar</a>
+    </form>
+</div>
