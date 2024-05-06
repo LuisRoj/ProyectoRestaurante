@@ -51,7 +51,7 @@ namespace ProyectoRestaurante.Controllers
                 if (VerificarCredenciales(usuario.Correo, usuario.Contraseña))
                 {
                     TempData["Mensaje"] = "Inicio de sesión exitoso.";
-                    return RedirectToAction("Index", "Platillo");
+                    return Redirect("/Platillo/Index");
                 }
                 else
                 {
