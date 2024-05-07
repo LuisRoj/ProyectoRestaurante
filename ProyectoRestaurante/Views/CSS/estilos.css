@@ -1,0 +1,18 @@
+﻿.login-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+    .login-form .form-group {
+        margin-bottom: 20px;
+    }
+
+/* Estilos para el formulario de registro */
+.registro-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+    .registro-form .form-group {
+        margin-bottom: 20px;
+    }

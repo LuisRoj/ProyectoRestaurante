@@ -13,7 +13,7 @@
     </div>
 }
 
-<form asp-action="Registrar" method="post">
+<form asp-controller="Usuario" asp-action="Registrar" method="post" class="registro-form">
     <div class="form-group">
         <label asp-for="Nombre">Nombre:</label>
         <input asp-for="Nombre" class="form-control" />

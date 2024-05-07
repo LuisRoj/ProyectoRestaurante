@@ -3,17 +3,23 @@ using Microsoft.Extensions.Configuration;
 using ProyectoRestaurante.Models;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
+using System.Net.Http.Headers;
 
 
 namespace RegistroUsuarioRestaurante
 {
     public class UsuarioController : Controller
     {
+        private readonly HttpClient _httpClient;
         private readonly IConfiguration _config;
 
         public UsuarioController(IConfiguration config)
         {
             _config = config;
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri("http://localhost:8080/api/UsuarioAPIController/"); 
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private List<Usuario> ListarUsuarios()
@@ -78,7 +84,7 @@ namespace RegistroUsuarioRestaurante
             }
         }
         [HttpPost]
-        public IActionResult Registro(Usuario usuario)
+        public async Task<IActionResult> Registro(Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -88,9 +94,17 @@ namespace RegistroUsuarioRestaurante
                     return View(usuario);
                 }
 
-                InsertarUsuarioEnBaseDeDatos(usuario);
-                TempData["Mensaje"] = "¡Usuario registrado exitosamente!";
-                return RedirectToAction("Index", "Home");
+                HttpResponseMessage response = await _httpClient.PostAsJsonAsync("Registrar", usuario);
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["Mensaje"] = "¡Usuario registrado exitosamente!";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["Mensaje"] = "Error al registrar usuario.";
+                    return RedirectToAction("Registro");
+                }
             }
             else
             {
