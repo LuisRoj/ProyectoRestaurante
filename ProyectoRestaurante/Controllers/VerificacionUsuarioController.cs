@@ -14,42 +14,18 @@ namespace ProyectoRestaurante.Controllers
             _config = config;
         }
 
-        private bool VerificarCredenciales(string correo, string contraseña)
-        {
-            bool credencialesValidas = false;
-            using (SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
-            {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("usp_VerificarCredenciales", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@Correo", correo);
-                cmd.Parameters.AddWithValue("@Contraseña", contraseña);
-
-                using (SqlDataReader dr = cmd.ExecuteReader())
-                {
-                    if (dr.Read())
-                    {
-                        credencialesValidas = true;
-                    }
-                }
-            }
-            return credencialesValidas;
-        }
-
         public ActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Login(Usuario oUsuario, string cadena)
+        public ActionResult Login(Usuario oUsuario)
         {
-
-            using (SqlConnection cn = new SqlConnection(cadena))
+            using (SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
             {
-                SqlCommand cmd = new SqlCommand("sp_ValidarUsuario", cn);
+                SqlCommand cmd = new SqlCommand("sp_ValidadUsuario", cn);
                 cmd.Parameters.AddWithValue("Correo", oUsuario.Correo);
-                cmd.Parameters.AddWithValue("Clave", oUsuario.Contraseña);
+                cmd.Parameters.AddWithValue("Contraseña", oUsuario.Contraseña);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cn.Open();
@@ -59,7 +35,7 @@ namespace ProyectoRestaurante.Controllers
 
             if (oUsuario.Id != 0)
             {
-                TempData["usuario"] = oUsuario;
+                TempData["usuarioId"] = oUsuario.Id;
                 return RedirectToAction("Index", "Platillo");
             }
             else
@@ -68,5 +44,6 @@ namespace ProyectoRestaurante.Controllers
                 return View("Login");
             }
         }
+
     }
 }

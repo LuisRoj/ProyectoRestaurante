@@ -33,13 +33,6 @@
                             <text>active</text>
                             }" href="/Platillo/BuscarPedido">Cancelar Pedido</a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link platillo-btn @if(ViewContext.RouteData.Values["Controller"].ToString() == "Platillo" && ViewContext.RouteData.Values["Action"].ToString() == "Platillos") {
-                            <text>active</text>
-                            }" href="/Platillo/Platillos">Gestion Platillos</a>
-
-                        </li>
                       
                         <li class="nav-item">
                             <a class="nav-link carrito-btn @if(ViewContext.RouteData.Values["Controller"].ToString() == "Platillo" && ViewContext.RouteData.Values["Action"].ToString() == "Carrito") {

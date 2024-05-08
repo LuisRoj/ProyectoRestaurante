@@ -75,7 +75,7 @@ namespace RegistroUsuarioRestaurante
             {
                 InsertarUsuarioEnBaseDeDatos(usuario);
                 TempData["Mensaje"] = "Usuario registrado correctamente.";
-                return RedirectToAction("Index", "Platillo"); // Redirige al usuario a la página de prodcutos
+                return RedirectToAction("Login", "VerificacionUsuario"); // Redirige al usuario a la página de prodcutos
             }
             else
             {
@@ -98,7 +98,7 @@ namespace RegistroUsuarioRestaurante
                 if (response.IsSuccessStatusCode)
                 {
                     TempData["Mensaje"] = "¡Usuario registrado exitosamente!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "VerificacionUsuario");
                 }
                 else
                 {

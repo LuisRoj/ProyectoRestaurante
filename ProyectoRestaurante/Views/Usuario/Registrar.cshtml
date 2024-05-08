@@ -6,12 +6,6 @@
 
 <h2>Registro de Usuario</h2>
 
-@if (!string.IsNullOrEmpty(TempData["Mensaje"] as string))
-{
-    <div class="alert alert-info" role="alert">
-        @TempData["Mensaje"]
-    </div>
-}
 
 <form asp-controller="Usuario" asp-action="Registrar" method="post" class="registro-form">
     <div class="form-group">
@@ -52,11 +46,4 @@
     <button type="submit" class="btn btn-primary">Registrar</button>
 </form>
 
-@section Scripts {
-    <script>
-        // Función para redirigir al usuario a la vista de productos después de registrar
-        function redirigirAVistaProductos() {
-            window.location.href = "@Url.Action("Index", "Productos")";
-        }
-    </script>
 }
