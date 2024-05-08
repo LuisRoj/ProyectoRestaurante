@@ -15,13 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Reportes\libwkhtmltox.dll">
+    <None Update="LibreriaPDF\libwkhtmltox.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Reportes\libwkhtmltox.dylib">
+    <None Update="LibreriaPDF\libwkhtmltox.dylib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Reportes\libwkhtmltox.so">
+    <None Update="LibreriaPDF\libwkhtmltox.so">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
