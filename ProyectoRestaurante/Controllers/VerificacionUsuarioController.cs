@@ -45,7 +45,7 @@ namespace ProyectoRestaurante.Controllers
         public ActionResult Login(Usuario oUsuario, string cadena)
         {
 
-            using (SqlConnection cn = new SqlConnection(cadena))
+            using(SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
             {
                 SqlCommand cmd = new SqlCommand("sp_ValidarUsuario", cn);
                 cmd.Parameters.AddWithValue("Correo", oUsuario.Correo);
