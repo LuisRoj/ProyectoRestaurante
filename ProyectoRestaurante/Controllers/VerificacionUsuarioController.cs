@@ -37,28 +37,36 @@ namespace ProyectoRestaurante.Controllers
             return credencialesValidas;
         }
 
-        [HttpGet]
-        public IActionResult Login()
+        public ActionResult Login()
         {
             return View();
         }
-
         [HttpPost]
-        public IActionResult VerificarCredenciales(Usuario usuario)
+        public ActionResult Login(Usuario oUsuario, string cadena)
         {
-            if (ModelState.IsValid)
+
+            using (SqlConnection cn = new SqlConnection(cadena))
             {
-                if (VerificarCredenciales(usuario.Correo, usuario.Contraseña))
-                {
-                    TempData["Mensaje"] = "Inicio de sesión exitoso.";
-                    return Redirect("/Platillo/Index");
-                }
-                else
-                {
-                    TempData["Mensaje"] = "Correo electrónico o contraseña incorrectos.";
-                }
+                SqlCommand cmd = new SqlCommand("sp_ValidarUsuario", cn);
+                cmd.Parameters.AddWithValue("Correo", oUsuario.Correo);
+                cmd.Parameters.AddWithValue("Clave", oUsuario.Contraseña);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cn.Open();
+
+                oUsuario.Id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
             }
-            return View("Login", usuario);
+
+            if (oUsuario.Id != 0)
+            {
+                TempData["usuario"] = oUsuario;
+                return RedirectToAction("Index", "Platillo");
+            }
+            else
+            {
+                ViewData["Mensaje"] = "Usuario no encontrado";
+                return View("Login");
+            }
         }
     }
 }
