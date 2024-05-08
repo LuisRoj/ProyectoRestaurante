@@ -196,6 +196,94 @@ namespace ProyectoRestaurante.Controllers
             }
         }
 
+
+        // Método para buscar un pedido por su número de pedido (npedido)
+        public Pedido BuscarPedidoPorNpedido(string npedido)
+        {
+            Pedido pedido = null;
+
+            using (SqlConnection cnn = new SqlConnection(_config["ConnectionStrings:sql"]))
+            {
+                cnn.Open();
+                SqlCommand cmd = new SqlCommand("usp_BuscarPedidoPorNpedido", cnn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@npedido", npedido);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    pedido = new Pedido
+                    {
+                        id = dr.GetInt32(0),
+                        npedido = dr.GetString(1),
+                        fpedido = dr.GetDateTime(2),
+                        dnicliente = dr.GetString(3),
+                        nombrecliente = dr.GetString(4),
+                        emailcliente = dr.GetString(5),
+                        fonocliente = dr.GetString(6)
+                    };
+                }
+
+                dr.Close();
+            }
+
+            return pedido;
+        }
+
+
+        private DetallePedido BuscarDetallePedidoPorNpedido(string npedido)
+        {
+            DetallePedido detallePedido = null;
+
+            using (SqlConnection cnn = new SqlConnection(_config["ConnectionStrings:sql"]))
+            {
+                cnn.Open();
+                SqlCommand cmd = new SqlCommand("usp_BuscarDetallePedidoPorNpedido", cnn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@npedido", npedido);
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    detallePedido = new DetallePedido
+                    {
+                        Id = dr.GetInt32(0),
+                        Npedido = dr.GetString(1),
+                        FechaPedido = dr.GetDateTime(2),
+                        NombrePlatillo = dr.GetString(3),
+                        Precio = dr.GetDecimal(4),
+                        Cantidad = dr.GetInt32(5),
+                        Subtotal = dr.GetDecimal(6)
+                    };
+                }
+
+                dr.Close();
+            }
+
+            return detallePedido;
+        }
+
+
+        public IActionResult BuscarPedido()
+        {
+            return View();
+        }
+
+        /*public IActionResult CancelarPedido(string npedido)
+        {
+            var detallePedido = BuscarDetallePedidoPorNpedido(npedido);
+            return View(detallePedido);
+        }*/
+
+        public async Task<IActionResult> CancelarPedido(string npedido)
+        {
+            DetallePedido detallePedido = BuscarDetallePedidoPorNpedido(npedido);
+            return View(await Task.Run(() => detallePedido));
+        }
+
+
         public async Task<IActionResult> Platillos(int p = 0)
         {
             IEnumerable<Platillo> temporal = ListarPlatillos();
@@ -230,6 +318,53 @@ namespace ProyectoRestaurante.Controllers
             Platillo platillo = seleccionarPlatillos(id).FirstOrDefault();
             return View(await Task.Run(() => platillo));
         }
+  
+        [HttpPost]
+        public IActionResult BuscarPedido(string npedido)
+        {
+            // Busca el pedido por su número de pedido
+            Pedido pedidoEncontrado = BuscarPedidoPorNpedido(npedido);
+
+            if (pedidoEncontrado == null)
+            {
+                ViewBag.ErrorMessage = "No se encontró ningún pedido con el número de pedido especificado.";
+                return View();
+            }
+
+            // Redirige a la acción DetallePedido y pasa el número de pedido
+            return RedirectToAction("CancelarPedido", new { npedido = pedidoEncontrado.npedido });
+        }
+
+
+        [HttpPost]
+        public IActionResult CancelarPedido(DetallePedido detallePedido)
+        {
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(_config["ConnectionStrings:sql"]))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("usp_cancelar_pedido", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@npedido", detallePedido.Npedido);
+
+                    string mensaje = cmd.ExecuteScalar()?.ToString();
+
+                    ViewBag.SuccessMessage = mensaje ?? "El pedido ha sido cancelado correctamente.";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Error al cancelar el pedido: " + ex.Message;
+            }
+
+            // Retorna la misma vista con los mensajes
+            return View();
+        }
+
+
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

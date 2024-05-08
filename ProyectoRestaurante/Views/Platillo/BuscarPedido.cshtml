@@ -1,0 +1,19 @@
+﻿@model ProyectoRestaurante.Models.BuscarPedidoViewModel
+
+<h1>Buscar Pedido</h1>
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<form asp-action="BuscarPedido" method="post">
+    <div class="form-group">
+        <label>Número de Pedido:</label>
+        <input asp-for="Npedido" class="form-control" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
