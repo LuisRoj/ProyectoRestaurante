@@ -36,32 +36,30 @@ namespace ProyectoRestaurante.Controllers
             return RedirectToAction("carrito");
         }
 
+        // 08/05/2024
+
+        // filtro Jhon
+
         public async Task<IActionResult> Index(string nombreBuscar = null, int pagina = 0)
         {
             List<Platillo> platillos = await Task.Run(() => ListarPlatillos(nombreBuscar));
 
-            int fila = 6; // Número de elementos por página
+            int fila = 6;
             int totalPlatillos = platillos.Count();
             int totalPaginas = totalPlatillos % fila == 0 ? totalPlatillos / fila : totalPlatillos / fila + 1;
 
             ViewBag.TotalPaginas = totalPaginas;
 
-            // Si la página es menor que cero o mayor que el número total de páginas, se establece en cero
             pagina = Math.Max(Math.Min(pagina, totalPaginas - 1), 0);
 
             ViewBag.PaginaActual = pagina;
 
-            // Aplicar la paginación después de filtrar los platillos por nombre
             platillos = platillos.Skip(fila * pagina).Take(fila).ToList();
 
             return View(platillos);
         }
 
 
-
-        // 08/05/2024
-
-        // filtro Jhon
 
         private List<Platillo> FiltrarPlatillosPorNombre(List<Platillo> platillos, string nombreBuscar)
         {
