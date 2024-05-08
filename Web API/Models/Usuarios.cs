@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProyectoRestaurante.Models
+namespace Web_API.Models
 {
-    // Este modelo se utiliza tanto para el registro de nuevos usuarios como para el inicio de sesión.
-    // En el contexto del inicio de sesión, solo se requieren el correo electrónico y la contraseña.
-    public class Usuario
+    public class Usuarios
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
@@ -12,7 +10,7 @@ namespace ProyectoRestaurante.Models
         public string Correo { get; set; }
         public string Telefono { get; set; }
         public string Direccion { get; set; }
-      
+
         [Required(ErrorMessage = "La contraseña es requerida.")]
         [DataType(DataType.Password)]
         public string Contraseña { get; set; }

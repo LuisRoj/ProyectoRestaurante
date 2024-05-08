@@ -1,0 +1,21 @@
+﻿@model ProyectoRestaurante.Models.Usuario
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Iniciar Sesión</h2>
+
+<!-- Formulario de inicio de sesión -->
+<form asp-controller="VerificacionUsuario" asp-action="VerificarCredenciales" method="post" class="login-form>
+    <div class="form-group">
+        <label asp-for="Correo">Correo electrónico:</label>
+        <input asp-for="Correo" class="form-control" />
+        <span asp-validation-for="Correo" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Contraseña">Contraseña:</label>
+        <input asp-for="Contraseña" type="password" class="form-control" />
+        <span asp-validation-for="Contraseña" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+</form>
