@@ -3,7 +3,52 @@
     ViewData["Title"] = "Login";
 }
 
-<h2>Iniciar Sesión</h2>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<head>
+
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <link href="d:\archivos de clases\desarrollo de servicios web\nueva carpeta (4)\proyectorestaurante\views\css\stylesheet.css" rel="stylesheet" />
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="d-flex justify-content-center h-100">
+			<div class="card">
+				<div class="card-header">
+					<h3>Iniciar Sesión</h3>
+				</div>
+				<div class="card-body">
+                    <!-- Formulario de inicio de sesión -->
+                    <form asp-controller="VerificacionUsuario" asp-action="Login" method="post" class="">
+                        <div class="form-group">
+                            <label asp-for="Correo">Correo electrónico:</label>
+                            <input asp-for="Correo" class="form-control" />
+                            <span asp-validation-for="Correo" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Contraseña">Contraseña:</label>
+                            <input asp-for="Contraseña" type="password" class="" />
+                            <span asp-validation-for="Contraseña" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </form>
+				</div>
+				<div class="card-footer">
+					<div class="d-flex justify-content-center links">
+                        No tienes cuenta?<a href="@Url.Action("Registrar","Registro")">Registrate </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 @if (ViewData["Mensaje"] != null)
 {
@@ -12,17 +57,4 @@
     </div>
 }
 
-<!-- Formulario de inicio de sesión -->
-<form asp-controller="VerificacionUsuario" asp-action="Login" method="post" class="login-form">
-    <div class="form-group">
-        <label asp-for="Correo">Correo electrónico:</label>
-        <input asp-for="Correo" class="form-control" />
-        <span asp-validation-for="Correo" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Contraseña">Contraseña:</label>
-        <input asp-for="Contraseña" type="password" class="form-control" />
-        <span asp-validation-for="Contraseña" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-</form>>
+</body>
