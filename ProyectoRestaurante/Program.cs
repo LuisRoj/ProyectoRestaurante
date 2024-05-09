@@ -1,9 +1,20 @@
+
+
+using DinkToPdf.Contracts;
+using DinkToPdf;
 using Microsoft.Extensions.Options;
+
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+
 
 //Agregado por Jhon
 builder.Services.AddDistributedMemoryCache(); //paraa agregar en memoria el producto selecionado
@@ -34,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Platillo}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

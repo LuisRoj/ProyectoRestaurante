@@ -2,18 +2,25 @@
 using ProyectoRestaurante.Models;
 using System.Data;
 using Microsoft.Data.SqlClient;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using DinkToPdf;
+using Microsoft.AspNetCore.Http.Extensions;
+
+
+using DinkToPdf.Contracts;
+
 
 namespace ProyectoRestaurante.Controllers
 {
     public class PlatilloController : Controller
     {
         private readonly IConfiguration _config;
+       
 
-        public PlatilloController(IConfiguration config)
+        public PlatilloController(IConfiguration config )
         {
             _config = config;
+            
         }
 
         public ActionResult Carrito()
@@ -35,22 +42,56 @@ namespace ProyectoRestaurante.Controllers
         {
             return RedirectToAction("carrito");
         }
-        
-        public async Task<IActionResult> Index()
+
+        // 08/05/2024
+
+        // filtro Jhon
+
+        public async Task<IActionResult> Index(string nombreBuscar = null, int pagina = 0)
         {
-            return View(await Task.Run(() => ListarPlatillos()));
+            List<Platillo> platillos = await Task.Run(() => ListarPlatillos(nombreBuscar));
+
+            int fila = 6;
+            int totalPlatillos = platillos.Count();
+            int totalPaginas = totalPlatillos % fila == 0 ? totalPlatillos / fila : totalPlatillos / fila + 1;
+
+            ViewBag.TotalPaginas = totalPaginas;
+
+            pagina = Math.Max(Math.Min(pagina, totalPaginas - 1), 0);
+
+            ViewBag.PaginaActual = pagina;
+
+            platillos = platillos.Skip(fila * pagina).Take(fila).ToList();
+
+            return View(platillos);
         }
 
-        
 
- 
-        public List<Platillo> ListarPlatillos()
+
+        private List<Platillo> FiltrarPlatillosPorNombre(List<Platillo> platillos, string nombreBuscar)
+        {
+            return platillos.Where(p => p.nombre.Contains(nombreBuscar)).ToList();
+        }
+
+
+        public List<Platillo> ListarPlatillos(string nombreBuscar = "")
         {
             List<Platillo> lista = new List<Platillo>();
             using (SqlConnection cnn = new SqlConnection(_config["ConnectionStrings:sql"]))
             {
                 cnn.Open();
-                SqlCommand cmd = new SqlCommand("usp_Platillo_Listar", cnn);
+                SqlCommand cmd;
+                if (string.IsNullOrWhiteSpace(nombreBuscar))
+                {
+                    // Si no se proporciona un nombre de búsqueda, simplemente listar todos los platillos
+                    cmd = new SqlCommand("usp_Platillo_Listar", cnn);
+                }
+                else
+                {
+                    // Proporcione un filtro JHONNNNNN
+                    cmd = new SqlCommand("sp_FiltrarPlatillosPorNombre", cnn);
+                    cmd.Parameters.AddWithValue("@NombreBuscar", nombreBuscar);
+                }
                 cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataReader dr = cmd.ExecuteReader();
                 while (dr.Read())
@@ -81,6 +122,7 @@ namespace ProyectoRestaurante.Controllers
             }
             return lista;
         }
+
 
 
         Platillo buscar(int id)
@@ -571,6 +613,7 @@ namespace ProyectoRestaurante.Controllers
             return View();
         }
 
+      
 
         public async Task<IActionResult> Detalle(int? id)
         {
@@ -620,6 +663,10 @@ namespace ProyectoRestaurante.Controllers
 
             return platillo;
         }
+
+        //filtros Jhon
+
+
 
 
 
