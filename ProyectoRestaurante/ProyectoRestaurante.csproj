@@ -14,16 +14,4 @@
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="LibreriaPDF\libwkhtmltox.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="LibreriaPDF\libwkhtmltox.dylib">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="LibreriaPDF\libwkhtmltox.so">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

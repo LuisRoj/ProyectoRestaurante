@@ -6,14 +6,21 @@
 
 <div>
     <h3 style="text-align:center">@ViewBag.mensaje</h3>
+   
+
 </div>
+
+
 
 <div>
     @if (!string.IsNullOrEmpty(ViewBag.npedido))
     {
         <p>Último pedido registrado: @ViewBag.npedido</p>
+      
     }
-
+    
+   
     @Html.ActionLink("Ir al Portal", "Index", null, new { @class = "btn btn-success" })
 </div>
+
 

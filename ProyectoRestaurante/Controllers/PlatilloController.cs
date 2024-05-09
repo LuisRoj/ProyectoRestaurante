@@ -2,18 +2,25 @@
 using ProyectoRestaurante.Models;
 using System.Data;
 using Microsoft.Data.SqlClient;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using DinkToPdf;
+using Microsoft.AspNetCore.Http.Extensions;
+
+
+using DinkToPdf.Contracts;
+
 
 namespace ProyectoRestaurante.Controllers
 {
     public class PlatilloController : Controller
     {
         private readonly IConfiguration _config;
+       
 
-        public PlatilloController(IConfiguration config)
+        public PlatilloController(IConfiguration config )
         {
             _config = config;
+            
         }
 
         public ActionResult Carrito()
@@ -606,6 +613,7 @@ namespace ProyectoRestaurante.Controllers
             return View();
         }
 
+      
 
         public async Task<IActionResult> Detalle(int? id)
         {

@@ -1,8 +1,124 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/home.css">
+</head>
+<body>
+    <div class="image-container">
+        <div class="background-image left-image" style="background-image: url('@Url.Content("~/icono/dragon_chifa.png")')">
+            <h1 class="display-4 animate-title text-center">CHIFA CHEN</h1>
+        </div>
+        <div class="background-image right-image" style="background-image: url('@Url.Content("~/icono/dragon_chifa.png")')">
+        </div>
+    </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <h2>Platillos Más Destacados</h2>
+    <div class="carousel-container">
+        <div class="carousel-item">
+            <img src="~/imagenes/arroz_chaufa.jpg" alt="Arroz Chaufa">
+            <div class="carousel-description">
+                <h3>Arroz Chaufa</h3>
+                <p>Delicioso arroz salteado con pollo, verduras y salsa de soja.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/imagenes/ensalada-cesar.jpg" alt="Ensalada César">
+            <div class="carousel-description">
+                <h3>Ensalada César</h3>
+                <p>Fresca ensalada con lechuga, pollo, crutones y aderezo césar.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/imagenes/lomo-saltado.jpg" alt="Lomo Saltado">
+            <div class="carousel-description">
+                <h3>Lomo Saltado</h3>
+                <p>Tiras de lomo de res salteadas con cebolla, tomate y papas fritas.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/imagenes/tallarin_saltado.jpg" alt="Tallarines Saltados">
+            <div class="carousel-description">
+                <h3>Tallarines Saltados</h3>
+                <p>Tallarines de trigo salteados con pollo, verduras y salsa de soja.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <h3>Platillos Más Comprados</h3>
+    <div class="platillos-images">
+        <div class="platillo-item">
+            <img src="~/imagenes/risotto-champinones.jpg" alt="Risotto de Champiñones">
+            <div class="platillo-description">
+                <h3>Risotto de Champiñones</h3>
+                <p>Delicioso risotto con champiñones frescos y queso parmesano.</p>
+            </div>
+        </div>
+        <div class="platillo-item">
+            <img src="~/imagenes/lasana-vegetariana.jpg" alt="Lasaña Vegetariana">
+            <div class="platillo-description">
+                <h3>Lasaña Vegetariana</h3>
+                <p>Lasaña con capas de verduras frescas, queso y salsa de tomate.</p>
+            </div>
+        </div>
+        <div class="platillo-item">
+            <img src="~/imagenes/pizza-margarita.jpg" alt="Pizza Margarita">
+            <div class="platillo-description">
+                <h3>Pizza Margarita</h3>
+                <p>Clásica pizza con tomate, mozzarella fresca y albahaca.</p>
+            </div>
+        </div>
+        <div class="platillo-item">
+            <img src="~/imagenes/pollo-naranja.jpg" alt="Pollo a la Naranja">
+            <div class="platillo-description">
+                <h3>Pollo a la Naranja</h3>
+                <p>Pollo marinado con salsa de naranja y acompañado de arroz.</p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Chifa Chen</h3>
+                <p>Teléfono: 123-456-7890</p>
+                <p>WhatsApp: 987-654-3210</p>
+                <p>Dirección: Av. Ejemplo 123, Ciudad</p>
+            </div>
+            <div class="social-media">
+                <h3>Síguenos en:</h3>
+                <a href="#" class="social-icon"><img src="~/icono/facebook.png" alt="Facebook"></a>
+                <a href="#" class="social-icon"><img src="~/icono/instagram.png" alt="Instagram"></a>
+                <a href="#" class="social-icon"><img src="~/icono/tik-tok.png" alt="TikTok"></a>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script src="~/js/home.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

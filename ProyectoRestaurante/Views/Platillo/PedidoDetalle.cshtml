@@ -1,0 +1,34 @@
+﻿@model ProyectoRestaurante.Models.Pedido
+@using ProyectoRestaurante.Models
+
+<h1>Pedido @Model.npedido</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in (List<DetallePedido>)ViewBag.Detalles)
+        {
+            <tr>
+                <td>@item.Npedido</td>
+                <td>@item.Precio</td>
+                <td>@item.Cantidad</td>
+                <td>@(item.Precio * item.Cantidad)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>Nombre del cliente: @Model.nombrecliente</p>
+<p>DNI del cliente: @Model.dnicliente</p>
+<p>Email del cliente: @Model.emailcliente</p>
+<p>Teléfono del cliente: @Model.fonocliente</p>
+
+<a href="@Url.Action("DescargarPDF", new { npedido = Model.npedido })" class="btn btn-primary">Descargar PDF</a>
+
