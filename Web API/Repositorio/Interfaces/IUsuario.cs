@@ -1,15 +1,13 @@
 ﻿using Web_API.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Web_API.Repositorio.Interfaces
 {
-	public class iUsuario
-	{
-		IEnumerable<Usuario> ObtenerUsuarios();
-		Usuario ObtenerUsuarioPorId(int id);
-		string InsertarUsuario(Usuario usuario);
-		string EditarUsuario(Usuario usuario);
-		void EliminarUsuario(int id);
-	}
+    public interface IUsuario
+    {
+        Task<IEnumerable<Usuarios>> ObtenerUsuarios();
+        Task<Usuarios> ObtenerUsuario(int id);
+        Task<string> InsertarUsuario(Usuarios usuario);
+        Task<string> EditarUsuario(Usuarios usuario);
+        Task EliminarUsuario(int id);
+    }
 }
