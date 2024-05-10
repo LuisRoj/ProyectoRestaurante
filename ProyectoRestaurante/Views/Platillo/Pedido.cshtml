@@ -11,43 +11,46 @@
 <div>
     @Html.Partial("_PartialCarrito", (List<Registro>)ViewBag.carrito)
 </div>
+    <div class="centered-title">
 
-<h1>Pedido Registro</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Pedido">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="dnicliente" class="control-label"></label>
-                <input asp-for="dnicliente" class="form-control" />
-                <span asp-validation-for="dnicliente" class="text-danger"></span>
+        <h1>Pedido Registro</h1>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Pedido">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="dnicliente" class="control-label"></label>
+                        <input asp-for="dnicliente" class="form-control" />
+                        <span asp-validation-for="dnicliente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="nombrecliente" class="control-label"></label>
+                        <input asp-for="nombrecliente" class="form-control" />
+                        <span asp-validation-for="nombrecliente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="emailcliente" class="control-label"></label>
+                        <input asp-for="emailcliente" class="form-control" />
+                        <span asp-validation-for="emailcliente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="fonocliente" class="control-label"></label>
+                        <input asp-for="fonocliente" class="form-control" />
+                        <span asp-validation-for="fonocliente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Registrar" class="btn btn-primary" />
+                    </div>
+                </form>
+            <div>
+                <a asp-action="Index"><input type="submit" value="Index" class="btn btn-dark"></a>
             </div>
-            <div class="form-group">
-                <label asp-for="nombrecliente" class="control-label"></label>
-                <input asp-for="nombrecliente" class="form-control" />
-                <span asp-validation-for="nombrecliente" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="emailcliente" class="control-label"></label>
-                <input asp-for="emailcliente" class="form-control" />
-                <span asp-validation-for="emailcliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="fonocliente" class="control-label"></label>
-                <input asp-for="fonocliente" class="form-control" />
-                <span asp-validation-for="fonocliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Registrar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index"><input type="submit" value="Index" class="btn btn-dark"></a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

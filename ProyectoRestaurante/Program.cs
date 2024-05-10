@@ -1,14 +1,13 @@
-
-
-using DinkToPdf.Contracts;
-using DinkToPdf;
-using Microsoft.Extensions.Options;
-
-
-
-
+using ProyectoRestaurante.Repositorio;
+using ProyectoRestaurante.Repositorio.RepositorioSQL;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//referencias
+builder.Services.AddSingleton<ICiudad, ciudadSQL>();
+builder.Services.AddSingleton<IComentario, comentarioSQL>();
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
