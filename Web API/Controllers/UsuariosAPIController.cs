@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web_API.Data;
 using Web_API.Models;
+using Web_API.Repositorio.DAO;
 
 namespace Web_API.Controllers
 {
@@ -14,95 +15,59 @@ namespace Web_API.Controllers
     [ApiController]
     public class UsuariosAPIController : ControllerBase
     {
-        private readonly Web_APIContext _context;
+        private readonly UsuarioDAO _usuarioDAO;
 
-        public UsuariosAPIController(Web_APIContext context)
+        public UsuariosAPIController(UsuarioDAO usuarioDAO)
         {
-            _context = context;
+            _usuarioDAO = usuarioDAO;
         }
 
-        // GET: api/UsuariosAPI
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuarios>>> GetUsuarios()
+        [HttpGet("ObtenerUsuarios")]
+        public async Task<ActionResult<IEnumerable<Usuarios>>> ObtenerUsuarios()
         {
-            return await _context.Usuarios.ToListAsync();
+            var usuarios = await Task.Run(() => _usuarioDAO.ObtenerUsuarios());
+            return Ok(usuarios);
         }
 
-        // GET: api/UsuariosAPI/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuarios>> GetUsuarios(int id)
+        [HttpGet("ObtenerUsuario/{id}")]
+        public async Task<ActionResult<Usuarios>> ObtenerUsuario(int id)
         {
-            var usuarios = await _context.Usuarios.FindAsync(id);
-
-            if (usuarios == null)
+            var usuario = await Task.Run(() => _usuarioDAO.ObtenerUsuarioPorId(id));
+            if (usuario == null)
             {
                 return NotFound();
             }
-
-            return usuarios;
+            return Ok(usuario);
         }
 
-        // PUT: api/UsuariosAPI/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuarios(int id, Usuarios usuarios)
+        [HttpPost("InsertarUsuario")]
+        public async Task<ActionResult<string>> InsertarUsuario(Usuarios usuario)
         {
-            if (id != usuarios.Id)
+            await Task.Run(() => _usuarioDAO.InsertarUsuario(usuario));
+            return Ok("Usuario insertado correctamente");
+        }
+
+        [HttpPut("EditarUsuario/{id}")]
+        public async Task<ActionResult<string>> EditarUsuario(int id, Usuarios usuario)
+        {
+            if (id != usuario.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(usuarios).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UsuariosExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            await Task.Run(() => _usuarioDAO.EditarUsuario(usuario));
+            return Ok("Usuario actualizado correctamente");
         }
 
-        // POST: api/UsuariosAPI
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Usuarios>> PostUsuarios(Usuarios usuarios)
+        [HttpDelete("EliminarUsuario/{id}")]
+        public async Task<ActionResult<string>> EliminarUsuario(int id)
         {
-            _context.Usuarios.Add(usuarios);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsuarios", new { id = usuarios.Id }, usuarios);
-        }
-
-        // DELETE: api/UsuariosAPI/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuarios(int id)
-        {
-            var usuarios = await _context.Usuarios.FindAsync(id);
-            if (usuarios == null)
+            var usuario = await Task.Run(() => _usuarioDAO.ObtenerUsuarioPorId(id));
+            if (usuario == null)
             {
                 return NotFound();
             }
-
-            _context.Usuarios.Remove(usuarios);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UsuariosExists(int id)
-        {
-            return _context.Usuarios.Any(e => e.Id == id);
+            await Task.Run(() => _usuarioDAO.EliminarUsuario(id));
+            return Ok("Usuario eliminado correctamente");
         }
     }
 }
