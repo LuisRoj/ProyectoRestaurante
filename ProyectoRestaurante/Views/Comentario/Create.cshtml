@@ -1,0 +1,41 @@
+﻿@model ProyectoRestaurante.Models.Comentario
+@{
+    ViewData["Title"] = "Insertar Comentario";
+}
+
+<h2>Insertar Comentario</h2>
+
+<form asp-action="Create" id="comentarioForm">
+    <div class="form-group">
+        <label asp-for="comentario"></label>
+        <textarea asp-for="comentario" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="id_ciudad">Selecciona una ciudad</label>
+        <select asp-for="id_ciudad" asp-items="@ViewBag.ciudades" class="form-control">
+            <option value="">Selecciona una ciudad</option>
+        </select>
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary" />
+</form>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('comentarioForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Gracias por tu comentario',
+                text: 'Vuelve a nuestra página principal',
+                icon: 'success',
+                confirmButtonText: 'Ir a Página Principal',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("Index", "Home")';
+                }
+            });
+        });
+    </script>
+}
+

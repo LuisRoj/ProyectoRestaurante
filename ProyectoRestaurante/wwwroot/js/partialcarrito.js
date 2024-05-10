@@ -1,4 +1,5 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿
+// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
 
 function confirmDelete(productName, productId, deleteUrl, imageUrl) {
 
@@ -10,7 +11,7 @@ function confirmDelete(productName, productId, deleteUrl, imageUrl) {
 }
 
 function deleteProduct(deleteUrl) {
- 
+
     window.location.href = deleteUrl;
 }
 
