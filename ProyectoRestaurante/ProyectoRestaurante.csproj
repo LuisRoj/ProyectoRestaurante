@@ -29,4 +29,8 @@
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Web API\Web API.csproj" />
+  </ItemGroup>
+
 </Project>

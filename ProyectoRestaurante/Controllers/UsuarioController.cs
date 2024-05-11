@@ -17,7 +17,7 @@ namespace RegistroUsuarioRestaurante
         {
             _config = config;
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("http://localhost:8080/api/UsuarioAPIController/"); 
+            _httpClient.BaseAddress = new Uri("http://localhost:7161/api/UsuarioAPIController/"); 
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
